@@ -5,12 +5,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +38,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class MainActivity extends AppCompatActivity {
     ArrayList<MusicList> musicLists;
     EditText txtSong, txtSinger;
+    Button btnSong;
+    ListView listView;
+    int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +49,22 @@ public class MainActivity extends AppCompatActivity {
         getMusicList();
         setMusicList();
         checkEditTextFocus();
+        changeSongName();
     }
     public void findView() {
         txtSong = findViewById(R.id.txtAddSong);
         txtSinger = findViewById(R.id.txtAddSinger);
+        btnSong = findViewById(R.id.btnSong);
+        listView = findViewById(R.id.list_music);
     }
-    public void changeSongName(View v) {
-        EditText mEdit = (EditText) findViewById(R.id.name);
-        mEdit.setFocusable(true);
+    public void changeSongName() {
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            txtSong.setText(String.valueOf(musicLists.get(i).Name));
+            txtSinger.setText(String.valueOf(musicLists.get(i).Singer));
+            btnSong.setText("Sửa");
+            position = i;
+            btnSong.setEnabled(true);
+        });
     }
     public void checkEditTextFocus() {
         txtSong.setOnFocusChangeListener((view, b) -> {
@@ -61,13 +74,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         txtSinger.setOnFocusChangeListener((view, b) -> {
-            if(txtSinger.getText().toString().trim().equals("")) {
-                Button btnAddSong = findViewById(R.id.btnAddSong);
-                btnAddSong.setEnabled(true);
-            }
+            if(txtSinger.getText().toString().trim().equals("")) btnSong.setEnabled(true);
         });
     }
-    public void addSong(View v) {
+    public void songHandle(View view) {
+        if(btnSong.getText().toString().equals("Thêm")) addSong(view);
+        else {
+            editSong(view);
+            btnSong.setText("Thêm");
+        };
+    }
+    private void addSong(View view) {
         txtSong = findViewById(R.id.txtAddSong);
         txtSinger = findViewById(R.id.txtAddSinger);
         String song = txtSong.getText().toString();
@@ -76,7 +93,28 @@ public class MainActivity extends AppCompatActivity {
         setMusicList();
         txtSong.getText().clear();
         txtSinger.getText().clear();
+        txtSinger.clearFocus();
         moveUpListView();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputManager != null) inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+    private void editSong(View view) {
+        txtSong = findViewById(R.id.txtAddSong);
+        txtSinger = findViewById(R.id.txtAddSinger);
+        String song = txtSong.getText().toString();
+        String singer = txtSinger.getText().toString();
+        musicLists.set(position, new MusicList(song, singer));
+        setMusicList();
+        txtSong.getText().clear();
+        txtSinger.getText().clear();
+        txtSinger.clearFocus();
+        moveUpListView();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputManager != null) inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
     private void getMusicList() {
         try {
@@ -102,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setMusicList() {
         MusicAdapter musicAdapter = new MusicAdapter(this, musicLists);
-        ListView listView = findViewById(R.id.list_music);
 
         SwipeActionAdapter sAdapter = new SwipeActionAdapter(musicAdapter);
         sAdapter.setListView(listView);
@@ -166,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void moveDownListView() {
-        ListView listView = findViewById(R.id.list_music);
         Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
@@ -181,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
         txtSinger.setVisibility(View.VISIBLE);
     }
     private void moveUpListView() {
-        ListView listView = findViewById(R.id.list_music);
         txtSinger.setVisibility(View.INVISIBLE);
         Animation a = new Animation() {
             @Override
