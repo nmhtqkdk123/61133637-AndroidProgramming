@@ -35,78 +35,48 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<MusicList> musicLists;
+    EditText txtSong, txtSinger;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findView();
+        getMusicList();
         setMusicList();
-        EditText txtSong = findViewById(R.id.txtAddSong);
-        EditText txtSinger = findViewById(R.id.txtAddSinger);
-        txtSong.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                ListView listView = findViewById(R.id.list_music);
-
-                if(b) {
-                    Animation a = new Animation() {
-                        @Override
-                        protected void applyTransformation(float interpolatedTime, Transformation t) {
-                            super.applyTransformation(interpolatedTime, t);
-                            ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
-                            margin.setMargins(0, 100, 2, 0);
-                            listView.setLayoutParams(margin);
-                        }
-                    };
-                    a.setDuration(3000);
-                    listView.startAnimation(a);
-                    txtSinger.setVisibility(View.VISIBLE);
-                }
-                else {
-                    if(txtSong.getText().toString().trim().equals("")) {
-                        txtSinger.setVisibility(View.INVISIBLE);
-                        Animation a = new Animation() {
-                            @Override
-                            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                                super.applyTransformation(interpolatedTime, t);
-                                ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
-                                margin.setMargins(0, 0, 2, 0);
-                                listView.setLayoutParams(margin);
-                            }
-                        };
-                        a.setDuration(3000);
-                        listView.startAnimation(a);
-                    }
-                }
-            }
-        });
-        txtSinger.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(txtSinger.getText().toString().trim().equals("")) {
-                    Button btnAddSong = findViewById(R.id.btnAddSong);
-                    btnAddSong.setEnabled(true);
-                }
-            }
-        });
+        checkEditTextFocus();
+    }
+    public void findView() {
+        txtSong = findViewById(R.id.txtAddSong);
+        txtSinger = findViewById(R.id.txtAddSinger);
     }
     public void changeSongName(View v) {
         EditText mEdit = (EditText) findViewById(R.id.name);
         mEdit.setFocusable(true);
     }
+    public void checkEditTextFocus() {
+        txtSong.setOnFocusChangeListener((view, b) -> {
+            if(b) moveDownListView();
+            else {
+                if(txtSong.getText().toString().trim().equals("")) moveUpListView();
+            }
+        });
+        txtSinger.setOnFocusChangeListener((view, b) -> {
+            if(txtSinger.getText().toString().trim().equals("")) {
+                Button btnAddSong = findViewById(R.id.btnAddSong);
+                btnAddSong.setEnabled(true);
+            }
+        });
+    }
     public void addSong(View v) {
-        String song = findViewById(R.id.txtAddSong).toString();
-        String singer = findViewById(R.id.txtAddSinger).toString();
-        Log.d(song, singer);
+        txtSong = findViewById(R.id.txtAddSong);
+        txtSinger = findViewById(R.id.txtAddSinger);
+        String song = txtSong.getText().toString();
+        String singer = txtSinger.getText().toString();
         musicLists.add(new MusicList(song, singer));
-        MusicAdapter musicAdapter = new MusicAdapter(this, musicLists);
-        ListView listView = findViewById(R.id.list_music);
-
-        SwipeActionAdapter sAdapter = new SwipeActionAdapter(musicAdapter);
-        sAdapter.setListView(listView);
-        listView.setAdapter(sAdapter);
-        sAdapter
-                .addBackground(SwipeDirection.DIRECTION_NORMAL_LEFT,R.layout.row_bg_left);
-        sAdapter.notifyDataSetChanged();
+        setMusicList();
+        txtSong.getText().clear();
+        txtSinger.getText().clear();
+        moveUpListView();
     }
     private void getMusicList() {
         try {
@@ -131,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void setMusicList() {
-        getMusicList();
         MusicAdapter musicAdapter = new MusicAdapter(this, musicLists);
         ListView listView = findViewById(R.id.list_music);
 
@@ -195,6 +164,36 @@ public class MainActivity extends AppCompatActivity {
 //                // User stopped swiping (lifted finger from the screen)
 //            }
         });
+    }
+    private void moveDownListView() {
+        ListView listView = findViewById(R.id.list_music);
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                super.applyTransformation(interpolatedTime, t);
+                ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
+                margin.setMargins(0, 100, 2, 0);
+                listView.setLayoutParams(margin);
+            }
+        };
+        a.setDuration(3000);
+        listView.startAnimation(a);
+        txtSinger.setVisibility(View.VISIBLE);
+    }
+    private void moveUpListView() {
+        ListView listView = findViewById(R.id.list_music);
+        txtSinger.setVisibility(View.INVISIBLE);
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                super.applyTransformation(interpolatedTime, t);
+                ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
+                margin.setMargins(0, 0, 2, 0);
+                listView.setLayoutParams(margin);
+            }
+        };
+        a.setDuration(3000);
+        listView.startAnimation(a);
     }
 
 }
