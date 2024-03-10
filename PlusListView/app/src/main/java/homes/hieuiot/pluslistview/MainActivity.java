@@ -58,12 +58,13 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_music);
     }
     public void changeSongName() {
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+        listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
             txtSong.setText(String.valueOf(musicLists.get(i).Name));
             txtSinger.setText(String.valueOf(musicLists.get(i).Singer));
             btnSong.setText("Sửa");
             position = i;
             btnSong.setEnabled(true);
+            return true;
         });
     }
     public void checkEditTextFocus() {
