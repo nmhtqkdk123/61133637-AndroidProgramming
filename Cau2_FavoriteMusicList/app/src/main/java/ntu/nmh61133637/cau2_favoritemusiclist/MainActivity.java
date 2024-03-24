@@ -2,9 +2,13 @@ package ntu.nmh61133637.cau2_favoritemusiclist;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findView();
         getMusicList();
-
+        setMusicList();
         checkEditTextFocus();
         changeSongName();
     }
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_music);
     }
 
+    @SuppressLint("SetTextI18n")
     public void songHandle(View view) {
         if(btnSong.getText().toString().equals("Thêm")) addSong(view);
         else {
@@ -182,5 +187,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void moveDownListView() {
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                super.applyTransformation(interpolatedTime, t);
+                ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
+                margin.setMargins(0, 100, 2, 0);
+                listView.setLayoutParams(margin);
+            }
+        };
+        a.setDuration(3000);
+        listView.startAnimation(a);
+        txtSinger.setVisibility(View.VISIBLE);
+    }
+    private void moveUpListView() {
+        txtSinger.setVisibility(View.INVISIBLE);
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                super.applyTransformation(interpolatedTime, t);
+                ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
+                margin.setMargins(0, 0, 2, 0);
+                listView.setLayoutParams(margin);
+            }
+        };
+        a.setDuration(3000);
+        listView.startAnimation(a);
     }
 }
