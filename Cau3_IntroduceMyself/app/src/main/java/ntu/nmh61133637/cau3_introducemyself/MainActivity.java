@@ -2,6 +2,8 @@ package ntu.nmh61133637.cau3_introducemyself;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -53,12 +55,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void handleRemove(View view) {
-        txtNameVal.setText("");
-        txtClassVal.setText("");
-        txtIdVal.setText("");
-        txtPhoneVal.setText("");
-        txtEmailVal.setText("");
-        getInfo();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle("Xác nhận");
+        builder.setMessage("Bạn có chắc chắn muốn xoá thông tin cá nhân này không?");
+        builder.setPositiveButton("Cancel",
+                (dialog, which) -> {
+                });
+        builder.setNegativeButton(android.R.string.yes, (dialog, which) -> {
+            txtNameVal.setText("");
+            txtClassVal.setText("");
+            txtIdVal.setText("");
+            txtPhoneVal.setText("");
+            txtEmailVal.setText("");
+            getInfo();
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     public void setEditEnable(boolean check) {
         txtNameVal.setEnabled(check);
