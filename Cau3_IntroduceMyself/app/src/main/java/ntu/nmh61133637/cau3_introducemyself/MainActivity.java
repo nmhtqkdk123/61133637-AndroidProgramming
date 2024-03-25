@@ -52,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
             getInfo();
         }
     }
+    public void handleRemove(View view) {
+        txtNameVal.setText("");
+        txtClassVal.setText("");
+        txtIdVal.setText("");
+        txtPhoneVal.setText("");
+        txtEmailVal.setText("");
+        getInfo();
+    }
     public void setEditEnable(boolean check) {
         txtNameVal.setEnabled(check);
         txtClassVal.setEnabled(check);
