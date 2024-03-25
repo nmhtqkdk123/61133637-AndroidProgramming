@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnRemove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtID" />
 
     <EditText
-        android:id="@+id/txtIDVal"
+        android:id="@+id/txtEmailVal"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -25,11 +25,12 @@
         android:text="hieu.nmi.61cntt @ntu.edu.vn"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        android:editable="false"
         android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/txtID"
+        android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="144dp"
@@ -40,19 +41,20 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/txtIDVal"
+        android:id="@+id/txtPhoneVal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="76dp"
         android:text="0365325552"
         android:textSize="20dp"
+        android:editable="false"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/txtID"
+        android:id="@+id/txtPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -70,6 +72,7 @@
         android:layout_marginEnd="100dp"
         android:text="61133637"
         android:textSize="20dp"
+        android:editable="false"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -93,6 +96,7 @@
         android:layout_marginEnd="100dp"
         android:text="63-CNTT3"
         android:textSize="20dp"
+        android:editable="false"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -116,6 +120,7 @@
         android:layout_marginEnd="60dp"
         android:text="Ngô Minh Hiếu"
         android:textSize="20dp"
+        android:editable="false"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -154,7 +159,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
