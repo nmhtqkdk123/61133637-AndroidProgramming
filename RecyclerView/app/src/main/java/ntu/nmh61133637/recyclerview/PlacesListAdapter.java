@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
         return placesList.size();
     }
 
-    static final class PlaceItemHolder extends RecyclerView.ViewHolder {
+    final class PlaceItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView placeName;
         ImageView placeImage;
 
@@ -53,7 +54,14 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
             super(itemView);
             placeName = itemView.findViewById(R.id.placeName);
             placeImage = itemView.findViewById(R.id.placeImage);
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View view) {
+            int pos = getAdapterPosition();
+            PlacesList item = placesList.get(pos);
+            Toast.makeText(view.getContext(), "Bạn vừa chọn " + item.getPlaceName(), Toast.LENGTH_SHORT).show();
         }
     }
 }
