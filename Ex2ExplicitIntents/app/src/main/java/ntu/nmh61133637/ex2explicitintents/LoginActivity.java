@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Sai thông tin, vui lòng kiểm tra lại!", Toast.LENGTH_SHORT).show();
         else {
             Intent homeActivity = new Intent(this, HomeActivity.class);
+            homeActivity.putExtra("username", username);
             startActivity(homeActivity);
         }
     }
