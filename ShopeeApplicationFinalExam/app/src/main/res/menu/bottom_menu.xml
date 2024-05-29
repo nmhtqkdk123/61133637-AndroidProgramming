@@ -3,16 +3,16 @@
 
     <item
         android:id="@+id/product"
-        android:icon="@drawable/ic_product"
+        android:icon="@drawable/home_icon"
         android:title="Sản phẩm" />
 
     <item
         android:id="@+id/cart"
-        android:icon="@drawable/ic_cart"
+        android:icon="@drawable/cart_icon"
         android:title="Giỏ hàng" />
 
     <item
         android:id="@+id/profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/user_icon"
         android:title="Tài khoản" />
 </menu>

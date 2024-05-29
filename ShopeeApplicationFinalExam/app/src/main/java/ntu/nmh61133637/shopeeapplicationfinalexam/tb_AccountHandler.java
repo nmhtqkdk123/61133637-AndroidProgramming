@@ -23,7 +23,8 @@ public class tb_AccountHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createAccountTable = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)", TABLE_NAME, KEY_ID, KEY_NAME, KEY_STUDENT_ID, KEY_CLASS_NAME, KEY_EMAIL, KEY_PHONE_NUMBER);
+        String createAccountTable = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)",
+                                                   TABLE_NAME, KEY_ID, KEY_NAME, KEY_STUDENT_ID, KEY_CLASS_NAME, KEY_EMAIL, KEY_PHONE_NUMBER);
         db.execSQL(createAccountTable);
     }
 
