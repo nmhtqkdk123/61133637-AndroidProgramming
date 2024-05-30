@@ -54,7 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductI
         return products.size();
     }
     final class ProductItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView productName , productPrice, productSaleCount;
+        TextView productName, productPrice, productSaleCount;
         ImageView productImage;
 
         public ProductItemHolder(@NonNull View itemView) {
@@ -70,7 +70,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductI
         public void onClick(View view) {
             int pos = getAdapterPosition();
             Product item = products.get(pos);
-            Toast.makeText(view.getContext(), "Bạn vừa chọn " + item.getName(), Toast.LENGTH_SHORT).show();
+            try (tb_CartHandler cart = new tb_CartHandler(view.getContext())) {
+                ArrayList<Cart> cartItems = cart.getAllProduct();
+                boolean isExist = false;
+                for(Cart product: cartItems) {
+                    if (product.getProductID() == item.getId()) {
+                        isExist = true;
+                        cart.editProduct(product.getProductID(), product.getQuantity()+1);
+                        break;
+                    }
+                }
+                if(!isExist) cart.addProduct(item.getId());
+            }
+            Toast.makeText(view.getContext(), "Thêm sản phẩm " + item.getName() + " vào giỏ hàng thành công.", Toast.LENGTH_SHORT).show();
         }
     }
 }

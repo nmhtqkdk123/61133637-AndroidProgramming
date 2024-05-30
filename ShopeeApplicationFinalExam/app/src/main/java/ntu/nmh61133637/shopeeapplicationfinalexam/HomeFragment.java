@@ -30,8 +30,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            try (tb_ProductHandler productHandler = new tb_ProductHandler(getContext())) {
-                products = productHandler.getAllProduct();
+            try (tb_ProductHandler tb_product = new tb_ProductHandler(getContext())) {
+                products = tb_product.getAllProduct();
                 for (Product product : products) Log.d(String.valueOf(product.id), product.name);
             }
     }

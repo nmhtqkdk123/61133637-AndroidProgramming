@@ -47,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
 //                Log.d(String.valueOf(account.id), account.name);
 //            }
 //        } catch (Exception e) {System.out.println(e.getMessage());}
-            try (tb_ProductHandler tb_product = new tb_ProductHandler(MainActivity.this)) {
-                List<Product> products = tb_product.getAllProduct();
-                for(Product product: products) {
-                    Log.d(String.valueOf(product.id), product.name);
+            try (tb_CartHandler tb_cart = new tb_CartHandler(MainActivity.this)) {
+                List<Cart> products = tb_cart.getAllProduct();
+                for(Cart product: products) {
+                    Log.d(String.valueOf(product.productID), String.valueOf(product.quantity));
                 }
-//                tb_product.onCreate(tb_product.getWritableDatabase());
+//                tb_cart.onCreate(tb_cart.getWritableDatabase());
 //                tb_product.addProduct(new Product(0, "Dây cáp sạc nhanh USB to type-C hãng XIAOMI", "cap_sac_type_c_xiaomi", 23000, 3109));
 //                tb_product.addProduct(new Product(0, "Cà phê đặc sản Arabica Indonesia nhập khẩu", "ca_phe_arabica_indonesia", 168000, 62));
 //                tb_product.addProduct(new Product(0, "Cáp sạc nhanh Rocoren 240W 5A USB to TypeC", "cap_sac_rocoren_240w_type_c", 34000, 157));
