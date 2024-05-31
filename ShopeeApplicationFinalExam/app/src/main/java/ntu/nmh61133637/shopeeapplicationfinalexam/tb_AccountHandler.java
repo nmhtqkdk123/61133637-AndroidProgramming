@@ -58,8 +58,19 @@ public class tb_AccountHandler extends SQLiteOpenHelper {
         } else account = new Account();
         return account;
     }
-    public List<Account> getAllAccount() {
-        List<Account> accounts = new ArrayList<>();
+    public void editAccount(int id, Account account) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues item = new ContentValues();
+        item.put(KEY_NAME, account.getName());
+        item.put(KEY_STUDENT_ID, account.getStudentID());
+        item.put(KEY_CLASS_NAME, account.getClassName());
+        item.put(KEY_EMAIL, account.getEmail());
+        item.put(KEY_PHONE_NUMBER, account.getPhoneNumber());
+        db.update(TABLE_NAME, item, KEY_ID + " = ?", new String[] { String.valueOf(id) });
+        db.close();
+    }
+    public ArrayList<Account> getAllAccount() {
+        ArrayList<Account> accounts = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);

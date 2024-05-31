@@ -41,17 +41,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void createDatabase(View view) {
-//        try (tb_AccountHandler tb_account = new tb_AccountHandler(MainActivity.this)) {
-//            List<Account> accounts = tb_account.getAllAccount();
-//            for(Account account: accounts) {
-//                Log.d(String.valueOf(account.id), account.name);
-//            }
+        try (tb_AccountHandler tb_account = new tb_AccountHandler(MainActivity.this)) {
+            List<Account> accounts = tb_account.getAllAccount();
+            for (Account account : accounts) {
+                Log.d(String.valueOf(account.id), account.name);
+            }
+        }
 //        } catch (Exception e) {System.out.println(e.getMessage());}
-            try (tb_CartHandler tb_cart = new tb_CartHandler(MainActivity.this)) {
-                List<Cart> products = tb_cart.getAllProduct();
-                for(Cart product: products) {
-                    Log.d(String.valueOf(product.productID), String.valueOf(product.quantity));
-                }
+//            try (tb_CartHandler tb_cart = new tb_CartHandler(MainActivity.this)) {
+//                List<Cart> products = tb_cart.getAllProduct();
+//                for(Cart product: products) {
+//                    Log.d(String.valueOf(product.productID), String.valueOf(product.quantity));
+//                }
 //                tb_cart.onCreate(tb_cart.getWritableDatabase());
 //                tb_product.addProduct(new Product(0, "Dây cáp sạc nhanh USB to type-C hãng XIAOMI", "cap_sac_type_c_xiaomi", 23000, 3109));
 //                tb_product.addProduct(new Product(0, "Cà phê đặc sản Arabica Indonesia nhập khẩu", "ca_phe_arabica_indonesia", 168000, 62));
@@ -63,6 +64,6 @@ public class MainActivity extends AppCompatActivity {
 //                tb_product.addProduct(new Product(0, "Tham lau chân siêu mềm siêu dày", "tham_lau_chan_sieu_mem", 49000, 20824));
 //                tb_product.addProduct(new Product(0, "Chuột máy tính không dây Lofree Touch", "chuot_may_tinh_khong_day_lofree_touch", 1590000, 145));
 //                tb_product.addProduct(new Product(0, "Vòi hoa sen nhà bếp bằng thép SUS304", "voi_hoa_sen_nha_bep_bang_thep", 151000, 2158));
-        } catch (Exception e) {System.out.println(e.getMessage());}
+//        } catch (Exception e) {System.out.println(e.getMessage());}
     }
 }
